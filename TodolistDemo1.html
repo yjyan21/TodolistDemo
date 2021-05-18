@@ -18,6 +18,9 @@
          /* center section start */
          ul.items { width:340px;height:auto;overflow:hidden;margin:0 5px;}
          li.todoitem { width:340px;height:35px;line-height:35px;border-bottom:1px solid silver;color:grey;}
+         li.todoitem_finish { width:340px;height:35px;line-height:35px;border-bottom:1px solid silver;color:grey;
+           }
+           li.todoitem_finish :first-child { color:rgb(96, 226, 128);}
          .fa-check-circle { float:left;width:25px;height:35px;line-height:35px;margin-left:5px;}
          .item_name { width:285px;float:left;}
          .fa-trash-alt { width:25px;line-height:35px;float:left;}
@@ -34,6 +37,65 @@
         var mon = d.getMonth() + 1; //don't forget +1
         var day = d.getDate();
         date.innerHTML = mon +"-" + day +"-" + year;
+
+        //Notice this project has been finished;
+        var btn_finish = document.getElementsByClassName("fa-check-circle");
+        for(var i = 0;i < btn_finish.length; i++){
+            btn_finish[i].onclick = function(){
+                var li_finish = this.parentNode;
+                if(li_finish.className == "todoitem"){
+                    li_finish.className = "todoitem_finish";
+                }else{
+                    li_finish.className = "todoitem";
+                }
+                
+            }
+        }
+
+
+         //add new project
+        var add = document.getElementsByClassName("fa-plus-circle")[0];
+        add.onclick = function(){
+            var addhtml = document.getElementsByClassName("input_box")[0].value;
+            var li = document.createElement("li");
+            li.className = "todoitem";
+            var li_icon = document.createElement("i");
+            li_icon.className = "fas fa-check-circle";
+            li.appendChild(li_icon);
+            li_icon.onclick = function(){
+                var li_finish = this.parentNode;
+               // li_finish.className = "todoitem_finish";
+                if(this.parentNode.className == "todoitem"){
+                    this.parentNode.className = "todoitem_finish";
+                }else{
+                    this.parentNode.className = "todoitem";
+                }
+            }
+            var li_item = document.createElement("div");
+            li_item.className = "item_name";
+            li_item.innerHTML = addhtml;
+            li.appendChild(li_item);
+            var li_del = document.createElement("i");
+            li_del.className = "far fa-trash-alt";
+            li.appendChild(li_del);
+            li_del.onclick = function(){
+                var btn_line = this.parentNode.parentNode;
+                btn_line.removeChild(this.parentNode);
+            }
+            var items = document.getElementsByClassName("items")[0];
+            items.appendChild(li);
+            document.getElementsByClassName("input_box")[0].value = "";
+        }
+           //delete exist project
+           var btn_del = document.getElementsByClassName("fa-trash-alt");
+           for(var i = 0;i < btn_del.length; i++){
+             btn_del[i].onclick = function(){
+                var btn_line = this.parentNode.parentNode;
+                btn_line.removeChild(this.parentNode);
+              //  alert("hello");
+            }
+           }
+            
     }
     </script>
 </head>
@@ -45,33 +107,13 @@
         </div>
         
             <ul class="items">
-                <li class="todoitem">
-                    <i class="fas fa-check-circle"></i>
-                    <div class="item_name">Complete a project</div>
-                    <i class="far fa-trash-alt"></i>
-                </li>
-                <li class="todoitem">
+                <!-- <li class="todoitem">
                     <i class="far fa-check-circle"></i>
                     <div class="item_name">Complete a project</div>
                     <i class="far fa-trash-alt"></i>
-                </li>
+                </li> -->
                 <li class="todoitem">
                     <i class="fas fa-check-circle"></i>
-                    <div class="item_name">Complete a project</div>
-                    <i class="far fa-trash-alt"></i>
-                </li>
-                <li class="todoitem">
-                    <i class="far fa-check-circle"></i>
-                    <div class="item_name">Complete a project</div>
-                    <i class="far fa-trash-alt"></i>
-                </li>
-                <li class="todoitem">
-                    <i class="fas fa-check-circle"></i>
-                    <div class="item_name">Complete a project</div>
-                    <i class="far fa-trash-alt"></i>
-                </li>
-                <li class="todoitem">
-                    <i class="far fa-check-circle"></i>
                     <div class="item_name">Complete a project</div>
                     <i class="far fa-trash-alt"></i>
                 </li>
@@ -79,7 +121,7 @@
         
         <div class="add">
             <i class="fas fa-plus-circle"></i>
-            <input class="input_box" type="text" value="">
+            <input class="input_box" type="text" value=" Please enter ...">
         </div>
     </div>
 </body>
